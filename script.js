@@ -1,4 +1,5 @@
 let campos = document.querySelectorAll('.input-area input, textarea');
+let areaAviso = document.querySelector('#avisos');
 
 let avisoValido = {
     nome: {descricao: 'Informe um nome valido', ativado: false,},
@@ -7,12 +8,14 @@ let avisoValido = {
     mensagem: {descricao: 'Informe um mensagem valido', ativado: false,}
 };
 
+
 const regrasValidacao = {
     name: (inputNome) => {
        if (inputNome.value.length < 4) {
             inputNome.classList.add("invalid");
             avisoValido.nome.ativado = true;
             avisos(avisoValido);
+           
        } else {
             inputNome.classList.remove("invalid");
             avisoValido.nome.ativado = false;
@@ -67,28 +70,14 @@ const validarForm = (event) => {
    // let maximoAviso = campos.length;
     
     campos.forEach((item)=> {
-        if (item.id === 'nome') {
-            regrasValidacao.name(item);
-        }
-
-        if (item.id === 'email') {
-            regrasValidacao.email(item);
-        }
-
-        if (item.id === 'endereco') {
-            regrasValidacao.endereco(item);
-        }
-
-        if (item.id === 'mensagem') {
-            regrasValidacao.mensagem(item);
-        }
+        areaAviso.innerHTML = 'Carregando...'
+        loadAviso(item)
     });
 
 }
 
 
 const avisos = (aviso) => {
-
     //Renderização do html
     let htmlAviso = "<ul>";
     htmlAviso += "</ul>"
@@ -99,10 +88,34 @@ const avisos = (aviso) => {
             htmlAviso += `<li style="color:red">${valor.descricao}</li>`;
         }
     }
-
-    let areaAviso = document.querySelector('#avisos');
     areaAviso.innerHTML = htmlAviso;
 }
+
+const loadAviso = (item) => {
+    console.log(item.id)
+    setTimeout(() => {
+        if(item.id === 'nome') {
+            regrasValidacao.name(item);
+        }
+        if(item.id === 'email') {
+            regrasValidacao.email(item);
+        }
+
+        if(item.id === 'endereco') {
+            regrasValidacao.endereco(item);
+        }
+
+        if(item.id === 'mensagem') {
+            regrasValidacao.mensagem(item);
+        }
+        
+    },3000)
+};
+
+
+
+
+
 
 
 
